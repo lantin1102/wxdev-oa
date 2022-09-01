@@ -6,6 +6,7 @@ import com.tencent.wxcloudrun.util.EncryptUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,13 @@ public class WeChatController {
 	                         String timestamp,
 	                         String nonce,
 	                         String echostr) {
+		if (!StringUtils.hasText(signature)||
+				!StringUtils.hasText(timestamp)||
+				!StringUtils.hasText(nonce)||
+				!StringUtils.hasText(echostr)){
+			log.warn("param missing");
+			return "failure";
+		}
 
 		log.info("get message for wechat,signature:{},timestamp:{},nonce:{},echostr:{}",
 				signature, timestamp, nonce, echostr);
