@@ -12,6 +12,9 @@ spring:
     view:
       suffix: .html
       prefix: /
+wechat:
+  official-account:
+    token: lantin
 
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
