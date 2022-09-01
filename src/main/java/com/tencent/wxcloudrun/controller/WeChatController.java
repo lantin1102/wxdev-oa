@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Objects;
 import java.util.TreeSet;
 
-@Controller()
+@Controller("/wechat")
 @Slf4j
 public class WeChatController {
 
 	@Autowired
-	WeChatOfficialAccountProperties officialAccountProperties;
+	private WeChatOfficialAccountProperties officialAccountProperties;
 
 	@GetMapping("/wx")
 	@ResponseBody
