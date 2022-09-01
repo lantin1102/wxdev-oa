@@ -3,9 +3,9 @@ package com.tencent.wxcloudrun.util;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,7 +15,6 @@ public class HttpSignUtil {
 	 * 参数map不作urlencode，可用于已经encode过的参数map加签
 	 *
 	 * @param queryMap  参数map
-	 * @param useSecret 是否使用密钥
 	 * @param secret    密钥
 	 * @return
 	 */
@@ -91,27 +90,17 @@ public class HttpSignUtil {
 	}
 
 	private static String urlEncode(String str, boolean encodeBlankToPlus) {
-		String encodedStr = URLEncoder.encode(str, StandardCharsets.UTF_8);
-		if (encodeBlankToPlus) {
-			return encodedStr;
+
+		try {
+			String encodedStr = URLEncoder.encode(str, StandardCharsets.UTF_8.toString());
+			if (encodeBlankToPlus) {
+				return encodedStr;
+			}
+			return encodedStr.replace("+", "%20");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
 		}
-		return encodedStr.replace("+", "%20");
 	}
 
-
-
-	public static void main(String[] args) {
-
-		String encode = URLEncoder.encode(" ", StandardCharsets.UTF_8);
-		System.out.println(encode);
-		Map<String, String> queryMap = new HashMap<>();
-		queryMap.put("game_id", "5402");
-		queryMap.put("uid", "3508041");
-		queryMap.put("ts", "1647851374432");
-		queryMap.put("appkey", "klnMm4IwB0wVKd5M");
-		queryMap.put("name", "昵称12");
-		String md5Sign = getSign(queryMap, true, "NMl2lj4eJK2plFiXJ1Di3ECFW8zykCVg", true);
-		System.out.println(md5Sign);
-	}
 
 }
