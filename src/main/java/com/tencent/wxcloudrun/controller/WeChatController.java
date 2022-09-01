@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Objects;
@@ -21,6 +22,13 @@ public class WeChatController {
 
 	@Autowired
 	private WeChatOfficialAccountProperties officialAccountProperties;
+
+
+	@GetMapping("/auth")
+	public void auth(@RequestParam("code") String code) {
+		log.info("进入auth方法");
+		log.info("获取用户code={}", code);
+	}
 
 	@GetMapping("/wx")
 	@ResponseBody
