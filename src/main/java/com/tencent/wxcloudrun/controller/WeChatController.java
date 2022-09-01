@@ -36,19 +36,20 @@ public class WeChatController {
 			return "failure";
 		}
 	}
-	private boolean checkSign(String signature,String timestamp,String nonce ){
+
+	private boolean checkSign(String signature, String timestamp, String nonce) {
 		TreeSet<String> treeSet = new TreeSet<>();
 		treeSet.add(timestamp);
 		treeSet.add(nonce);
 		treeSet.add(officialAccountProperties.getToken());
 
 		StringBuilder sb = new StringBuilder();
-		treeSet.forEach(v->{
-			v = v==null?"":v;
+		treeSet.forEach(v -> {
+			v = v == null ? "" : v;
 			sb.append(v);
 		});
 		String sha1 = EncryptUtils.getSHA1(sb.toString());
-
+		log.info("get encrypt sha1:{}", sha1);
 		return Objects.equals(sha1, signature);
 	}
 
