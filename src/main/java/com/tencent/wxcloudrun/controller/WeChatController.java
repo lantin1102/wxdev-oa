@@ -3,24 +3,23 @@ package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.WeChatOfficialAccountProperties;
 import com.tencent.wxcloudrun.util.EncryptUtils;
-import com.tencent.wxcloudrun.util.HttpSignUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.Objects;
+import java.util.TreeSet;
 
-@Controller("/wechat")
+@Controller()
 @Slf4j
 public class WeChatController {
 
 	@Autowired
 	WeChatOfficialAccountProperties officialAccountProperties;
 
-	@GetMapping("/connection/test")
+	@GetMapping("/wx")
 	@ResponseBody
 	public String testServer(String signature,
 	                         String timestamp,
@@ -52,7 +51,6 @@ public class WeChatController {
 		log.info("get encrypt sha1:{}", sha1);
 		return Objects.equals(sha1, signature);
 	}
-
 
 
 }
